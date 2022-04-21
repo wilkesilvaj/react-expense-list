@@ -1,22 +1,58 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
 const ExpenseForm = () => {
-    const [title, setTitle] = useState('');
-    const [amount, setAmount] = useState('');
-    const [date, setDate] = useState('');
-    
+    // const [title, setTitle] = useState('');
+    // const [amount, setAmount] = useState('');
+    // const [date, setDate] = useState('');
+    const [userInput, setUserInput] = useState({
+        title: '',
+        amount: '',
+        date: ''
+    });
+        
 
+    // const titleChangeHandler = (event) =>    {
+    //     setTitle(event.target.value);
+    // }
+    // const amountChangeHandler = (event) =>    {
+    //     setAmount(event.target.value);
+    // }
+    // const dateChangeHandler = (event) =>    {
+    //     setDate(event.target.value);
+    // }
+    
+    /** Whenever updating one main "Object-state", instead of multiple individual ones, it is:
+     *  @ref @amountChangeHandler - BETTER to pass an anonymous function which then returns the desired previous state + your modifications. This is better because
+     * that anonymous function will always have the latest state of this component being passed to it @ref @prevState , thus preventing any issues due to 
+     * updating the state again using an outdated former state.
+     * 
+     *  @ref @titleChangeHandler - WORSE to directly use your setFunction to update the state directly, without an anonymous function. This because 
+     * React calls these functions and relies on the request at that time, so if React is processing multiple data/state updates at a given time 
+     * and you're simply trying to update the state WITHOUT an arrow function, React may be relying on an older data-version from a previous state update.
+     *  
+     * 
+     */
     const titleChangeHandler = (event) =>    {
-        setTitle(event.target.value);
+        setUserInput({
+            ...userInput,
+            title: event.target.value
+        });
     }
     const amountChangeHandler = (event) =>    {
-        setAmount(event.target.value);
+        setUserInput((prevState) =>   {
+            return {
+                ...prevState,
+                date: event.target.value
+            }
+        });
     }
     const dateChangeHandler = (event) =>    {
-        setDate(event.target.value);
+        setUserInput({
+            ...userInput,
+            date: event.target.value
+        });
     }
 
-    console.log('Title: '+title+'  | Amount :'+amount+'  |Date: '+date);
 
   return (
     <form action="">
