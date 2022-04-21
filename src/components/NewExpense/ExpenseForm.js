@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   //#region MultipleStatesSolution
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -68,7 +68,13 @@ const ExpenseForm = () => {
       amount: amount,
       date: new Date(date),
     };
-    console.log(expenseData);
+    // console.log('*==============================*');
+    // console.log('Inside ExpenseForm')
+    // console.log(expenseData);
+    // console.log('*==============================*');
+
+    // Calls the function which was passed on by the parent component
+    props.onSaveExpenseData(expenseData);
 
     /** Resets all states to their original values so the form data is reset once all data processing is done
      *  This relies on two-way binding, which is assinging a value to each input corresponding to my constants "title","amout" and "date"
