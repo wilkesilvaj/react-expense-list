@@ -6,16 +6,16 @@ import "./Expenses.css";
 const Expenses = (props) => {
   // Set the start value to the first option's value (it should be dynamic and retrieve current year instead, but its fine for now)
   const [selectedYear, setSelectedYear] = useState("2022");
+
+  // Local variable which takes the expenses and filters it down below
+  let filteredExpenses = props.expenses.filter(expense => new Date(expense.date).getFullYear() == selectedYear);    
+
   //Function which will be sent to a child component as a prop so that the child component can send data back to this component
   const filterByYearHandler = (selectedYear) => {
-    // console.log('*==============================*');
-    // console.log('Inside Expenses')
-    // console.log(selectedYear);
-    // console.log('*==============================*');
-
     setSelectedYear(selectedYear);
   };
 
+ 
   return (
     <div>
       <Card className="expenses">
@@ -23,7 +23,7 @@ const Expenses = (props) => {
           selectedYear={selectedYear}
           onFilterByYear={filterByYearHandler}
         />
-        {props.expenses.map((expense) => (
+        {filteredExpenses.map((expense) => (
           <ExpenseItem
             key={expense.id}
             id={expense.id}
