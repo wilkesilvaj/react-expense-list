@@ -5,6 +5,7 @@ const ExpenseForm = (props) => {
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
+  const [isFormVisible, setIsFormvisible] = useState(false);
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
@@ -14,6 +15,12 @@ const ExpenseForm = (props) => {
   };
   const dateChangeHandler = (event) => {
     setDate(event.target.value);
+  };
+  const hideFormHandler = () => {
+    setIsFormvisible(false);
+  };
+  const showFormHandler = () => {
+    setIsFormvisible(true);
   };
   //#endregion
 
@@ -68,21 +75,28 @@ const ExpenseForm = (props) => {
       amount: amount,
       date: new Date(date),
     };
-    // console.log('*==============================*');
-    // console.log('Inside ExpenseForm')
-    // console.log(expenseData);
-    // console.log('*==============================*');
-
+   
     // Calls the function which was passed on by the parent component
     props.onSaveExpenseData(expenseData);
 
     /** Resets all states to their original values so the form data is reset once all data processing is done
      *  This relies on two-way binding, which is assinging a value to each input corresponding to my constants "title","amout" and "date"
-    */
-    setTitle('');
-    setAmount('');
-    setDate('');
+     */
+    setTitle("");
+    setAmount("");
+    setDate("");
+    hideFormHandler();
   };
+
+  if (isFormVisible === false) {
+    return (
+      <div>
+        <button type="button" onClick={showFormHandler}>
+          Add New Expense
+        </button>
+      </div>
+    );
+  }
 
   return (
     <form action="" onSubmit={submitHandler}>
@@ -123,6 +137,9 @@ const ExpenseForm = (props) => {
         </div>
       </div>
       <div className="new-expense__actions">
+        <button type="button" onClick={hideFormHandler}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
