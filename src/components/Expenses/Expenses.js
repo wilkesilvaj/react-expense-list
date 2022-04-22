@@ -3,6 +3,7 @@ import ExpenseItem from "./ExpenseItem";
 import ExpensesFilter from "./ExpensesFilter";
 import Card from "../UI/Card";
 import "./Expenses.css";
+import ExpensesList from "./ExpensesList";
 const Expenses = (props) => {
   // Set the start value to the first option's value (it should be dynamic and retrieve current year instead, but its fine for now)
   const [selectedYear, setSelectedYear] = useState("2022");
@@ -17,21 +18,7 @@ const Expenses = (props) => {
     setSelectedYear(selectedYear);
   };
 
-  let expensesContent = <p>No expenses found for selected year.</p>;
 
-  if (filteredExpenses.length > 0) {
-    expensesContent =
-      filteredExpenses.length > 0 &&
-      filteredExpenses.map((expense) => (
-        <ExpenseItem
-          key={expense.id}
-          id={expense.id}
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
-        />
-      ));
-  }
 
   return (
     <div>
@@ -40,7 +27,8 @@ const Expenses = (props) => {
           selectedYear={selectedYear}
           onFilterByYear={filterByYearHandler}
         />
-       {expensesContent} 
+       {/* {expensesContent}  */}
+       <ExpensesList expenses={filteredExpenses} />
         {/* <ExpenseItem
           id={props.expenses[0].id}
           title={props.expenses[0].title}
