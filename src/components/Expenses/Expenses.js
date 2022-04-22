@@ -8,14 +8,31 @@ const Expenses = (props) => {
   const [selectedYear, setSelectedYear] = useState("2022");
 
   // Local variable which takes the expenses and filters it down below
-  let filteredExpenses = props.expenses.filter(expense => new Date(expense.date).getFullYear() == selectedYear);    
+  let filteredExpenses = props.expenses.filter(
+    (expense) => new Date(expense.date).getFullYear() == selectedYear
+  );
 
   //Function which will be sent to a child component as a prop so that the child component can send data back to this component
   const filterByYearHandler = (selectedYear) => {
     setSelectedYear(selectedYear);
   };
 
- 
+  let expensesContent = <p>No expenses found for selected year.</p>;
+
+  if (filteredExpenses.length > 0) {
+    expensesContent =
+      filteredExpenses.length > 0 &&
+      filteredExpenses.map((expense) => (
+        <ExpenseItem
+          key={expense.id}
+          id={expense.id}
+          title={expense.title}
+          amount={expense.amount}
+          date={expense.date}
+        />
+      ));
+  }
+
   return (
     <div>
       <Card className="expenses">
@@ -23,15 +40,7 @@ const Expenses = (props) => {
           selectedYear={selectedYear}
           onFilterByYear={filterByYearHandler}
         />
-        {filteredExpenses.map((expense) => (
-          <ExpenseItem
-            key={expense.id}
-            id={expense.id}
-            title={expense.title}
-            amount={expense.amount}
-            date={expense.date}
-          />
-        ))}
+       {expensesContent} 
         {/* <ExpenseItem
           id={props.expenses[0].id}
           title={props.expenses[0].title}
