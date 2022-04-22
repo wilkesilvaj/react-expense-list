@@ -23,7 +23,16 @@ const Expenses = (props) => {
           selectedYear={selectedYear}
           onFilterByYear={filterByYearHandler}
         />
-        <ExpenseItem
+        {props.expenses.map((expense) => (
+          <ExpenseItem
+            key={expense.id}
+            id={expense.id}
+            title={expense.title}
+            amount={expense.amount}
+            date={expense.date}
+          />
+        ))}
+        {/* <ExpenseItem
           id={props.expenses[0].id}
           title={props.expenses[0].title}
           amount={props.expenses[0].amount}
@@ -50,7 +59,7 @@ const Expenses = (props) => {
           amount={props.expenses[3].amount}
           key={props.expenses[3].id}
           date={props.expenses[3].date}
-        />
+        /> */}
       </Card>
     </div>
   );
